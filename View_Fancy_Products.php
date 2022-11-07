@@ -1,3 +1,17 @@
+<?php
+    session_start();
+    $con=mysqli_connect("localhost","root","","fancy_shop");
+    if(!$con)
+    {
+        die("failure in connection: ".mysqli_connect_error());
+    }
+    else{
+        echo"welcome to succefull connection";
+        $q="select * from product;";
+        mysqli_query($con,$q);
+        }  
+        //end the db connection.
+?>
 <html>
     <head>
         <style>
@@ -98,22 +112,24 @@
                 </thead>
                     <tbody>
                         <?php
-                        while($row=mysqli_fetch_assoc($con,$q))
-                        {?>
-                            <?php echo "<br>"; ?>
-                            <tr>
-                                <td><?php echo $row['Product_ID']?></td>
-                                <td><?php echo $row['Product_Name']?></td>
-                                <td><?php echo $row['Product_Price']?></td>
-                                <td><?php echo $row['Product_qty']?></td>
-                                <td><?php echo $row['Product_Rating']?></td>
-                                <td><?php echo $row['Product_Status']?></td>
-                                <td><?php echo $row['Reference_Category_ID']?></td>
-                            </tr>
-                        <? php} ?>
+                        $result = mysqli_query($con,$q);
+
+                            while($row=mysqli_fetch_assoc($result))
+                            {
+                                echo "<br>";
+                                echo "<tr>";
+                                    echo"<td>".$row['Product_ID'] ."</td>";
+                                    echo"<td>".$row['Product_Name']."</td>";
+                                    echo"<td>".$row['Product_Price']."</td>";
+                                    echo"<td>".$row['Product_qty']."</td>";
+                                    echo"<td>".$row['Product_Rating']."</td>";
+                                    echo"<td>".$row['Product_Status']."</td>";
+                                    echo"<td>".$row['Reference_Category_ID']."</td>";
+                                echo"</tr>";
+                            }
+                        ?>
                     </tbody>
             </table> 
         </div>
     </body>
 </html>
-<?php echo"byrutuja"?>
